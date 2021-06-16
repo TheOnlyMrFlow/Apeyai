@@ -33,7 +33,7 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttribute.AssertValidity())
+                .Invoking(textAttr => textAttr.AssertValidity())
                 .Should().Throw<TextAttributesMinLengthHigherThanMaxLengthException>();
         }
 
@@ -48,7 +48,7 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttribute.AssertValidity())
+                .Invoking(textAttr => textAttr.AssertValidity())
                 .Should().NotThrow();
         }
     } 

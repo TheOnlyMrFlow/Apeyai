@@ -1,8 +1,8 @@
 ﻿using Apeyai.Core.Common.UseCases;
 
-namespace Apeyai.Core.UseCases.Schemas.Create
+namespace Apeyai.Core.UseCases.CreateEmptySchema
 {
-    public class CreateSchemaResponse: IUseCaseResponse
+    public class CreateEmptySchemaResponse: IUseCaseResponse
     {
         public enum ECreateSchemaError
         {
@@ -14,6 +14,6 @@ namespace Apeyai.Core.UseCases.Schemas.Create
 
         public ECreateSchemaError? Error { get; internal set; }
 
-        public bool Success => Error != null;
+        public bool Success => Error == null;
     }
 }

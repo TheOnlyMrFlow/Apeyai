@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Common.UseCases
 {
-    public abstract class UseCasePresenter<T> where T : IUseCaseResponse
+    public interface IUseCasePresenter<in T> where T : IUseCaseResponse
     {
-        public abstract Task Present(T response);
+        Task Present(T response);
     }
 }

@@ -1,16 +1,13 @@
 ﻿using Apeyai.Core.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apeyai.Core.Entities
 {
     public class Schema : IIdentifiable
     {
         public int Id { get; }
+        
+        public TextAttribute[] TextAttributes { get; set; }
 
-        public ISchemaAttribute[] attributes;
+        public BooleanAttribute[] BooleanAttributes { get; set; }
     }
 }

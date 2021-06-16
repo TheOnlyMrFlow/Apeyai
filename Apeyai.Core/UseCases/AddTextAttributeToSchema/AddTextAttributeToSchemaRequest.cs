@@ -1,6 +1,6 @@
-﻿namespace Apeyai.Core.UseCases.TextAttributes.Create
+﻿namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
 {
-    public class CreateTextAttributeRequest
+    public class AddTextAttributeToSchemaRequest
     {
         public int SchemaId { get; set; }
 

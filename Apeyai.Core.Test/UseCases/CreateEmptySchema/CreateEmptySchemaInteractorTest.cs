@@ -1,23 +1,23 @@
 ﻿using System.Threading.Tasks;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
-using Apeyai.Core.UseCases.Schemas.Create;
+using Apeyai.Core.UseCases.CreateEmptySchema;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using static Apeyai.Core.UseCases.Schemas.Create.CreateSchemaResponse;
+using static Apeyai.Core.UseCases.CreateEmptySchema.CreateEmptySchemaResponse;
 
-namespace Apeyai.Core.Test.UseCases.Schemas.Create
+namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
 {
-    public class CreateTextAttributeInteractorTest
+    public class CreateEmptySchemaInteractorTest
     {
         public Mock<ISchemaRepository> _schemaRepositoryMock;
-        public Mock<CreateSchemaPresenter> _createSchemaPresenterMock;
+        public Mock<ICreateEmptySchemaPresenter> _createSchemaPresenterMock;
 
-        public CreateTextAttributeInteractorTest()
+        public CreateEmptySchemaInteractorTest()
         {
             _schemaRepositoryMock = new Mock<ISchemaRepository>();
-            _createSchemaPresenterMock = new Mock<CreateSchemaPresenter>();
+            _createSchemaPresenterMock = new Mock<ICreateEmptySchemaPresenter>();
         }
 
         [Fact]
@@ -25,10 +25,12 @@ namespace Apeyai.Core.Test.UseCases.Schemas.Create
         {
             _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Returns(Task.FromResult(12));
 
-            var createSchemaRequest = new CreateSchemaRequest() { SchemaName = "Toto" };
-            var interactor = new CreateSchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
+            var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
+            var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
             var response = await interactor.Invoke();
+
+            response.Success.Should().BeTrue();
             response.SchemaId.Should().Be(12);
         }
 
@@ -37,10 +39,13 @@ namespace Apeyai.Core.Test.UseCases.Schemas.Create
         {
             _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Throws<EntityAlreadyExistsException>();
 
-            var createSchemaRequest = new CreateSchemaRequest() { SchemaName = "Toto" };
-            var interactor = new CreateSchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
+            var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
+            var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
             var response = await interactor.Invoke();
+
+            response.Success.Should().BeFalse();
+            response.SchemaId.Should().BeNull();
             response.Error.Should().Be(ECreateSchemaError.AlreadyExists);
         }
 
@@ -49,10 +54,13 @@ namespace Apeyai.Core.Test.UseCases.Schemas.Create
         {
             _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Throws<RepositoryException>();
 
-            var createSchemaRequest = new CreateSchemaRequest() { SchemaName = "Toto" };
-            var interactor = new CreateSchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
+            var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
+            var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
             var response = await interactor.Invoke();
+
+            response.Success.Should().BeFalse();
+            response.SchemaId.Should().BeNull();
             response.Error.Should().Be(ECreateSchemaError.Unknown);
         }
     }
