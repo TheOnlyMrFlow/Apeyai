@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apeyai.Core.Ports.Persistence
+namespace Apeyai.Core.Infra.Persistence.Ports
 {
     public interface ISchemaRepository
     {
-        public Task<int> CreateEmptySchema(string schemaName);
+        Task<int> CreateEmptySchema(string schemaName);
     }
 }
