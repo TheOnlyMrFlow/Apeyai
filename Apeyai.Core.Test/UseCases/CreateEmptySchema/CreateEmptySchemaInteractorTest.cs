@@ -31,7 +31,6 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var response = await interactor.Invoke();
 
             response.Success.Should().BeTrue();
-            response.SchemaId.Should().Be(12);
         }
 
         [Fact]
@@ -45,7 +44,6 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var response = await interactor.Invoke();
 
             response.Success.Should().BeFalse();
-            response.SchemaId.Should().BeNull();
             response.Error.Should().Be(ECreateSchemaError.AlreadyExists);
         }
 
@@ -60,7 +58,6 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var response = await interactor.Invoke();
 
             response.Success.Should().BeFalse();
-            response.SchemaId.Should().BeNull();
             response.Error.Should().Be(ECreateSchemaError.Unknown);
         }
     }

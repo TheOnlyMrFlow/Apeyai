@@ -10,8 +10,6 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
             Unknown
         }
 
-        public int? SchemaId { get; internal set; }
-
         public ECreateSchemaError? Error { get; internal set; }
 
         public bool Success => Error == null;

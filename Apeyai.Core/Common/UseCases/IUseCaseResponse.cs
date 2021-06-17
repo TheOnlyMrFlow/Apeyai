@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Common.UseCases
 {
-    public interface IUseCaseResponse { }
+    public interface IUseCaseResponse
+    {
+        bool Success { get; }
+    }
 }

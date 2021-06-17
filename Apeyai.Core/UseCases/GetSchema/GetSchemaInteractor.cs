@@ -28,7 +28,7 @@ namespace Apeyai.Core.UseCases.GetSchema
 
             try
             {
-                response.Schema = await _schemaRepository.GetSchema(_request.SchemaId);
+                response.Schema = await _schemaRepository.GetSchema(_request.SchemaName);
             }
             catch (EntityNotFoundException)
             {

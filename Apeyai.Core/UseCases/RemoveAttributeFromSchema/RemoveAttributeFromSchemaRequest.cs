@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apeyai.Core.UseCases.GetSchema
+namespace Apeyai.Core.UseCases.RemoveAttributeFromSchema
 {
-    public class GetSchemaRequest
+    public class RemoveAttributeFromSchemaRequest
     {
         public string SchemaName { get; set; }
+
+        public string AttributeName { get; set; }
     }
 }

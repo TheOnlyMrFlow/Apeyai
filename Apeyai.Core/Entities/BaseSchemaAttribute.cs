@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Entities
 {
-    public abstract class BaseSchemaAttribute: ISchemaAttribute
+    public abstract class BaseSchemaAttribute
     {
-        public int Id { get; }
+        public string Name { get; set; }
+
         public bool IsRequired { get; set; }
     }
 }

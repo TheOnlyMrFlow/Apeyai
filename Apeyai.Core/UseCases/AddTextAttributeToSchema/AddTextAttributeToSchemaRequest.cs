@@ -2,7 +2,7 @@
 {
     public class AddTextAttributeToSchemaRequest
     {
-        public int SchemaId { get; set; }
+        public string SchemaName { get; set; }
 
         public string AttributeName { get; set; }
 

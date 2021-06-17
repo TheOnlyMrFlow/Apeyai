@@ -34,8 +34,7 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
             try
             {
                 textAttribute.AssertValidity();
-                response.AttributeId =
-                    await _schemaRepository.AddTextAttributeToSchema(_request.SchemaId, textAttribute);
+                await _schemaRepository.AddTextAttributeToSchema(_request.SchemaName, textAttribute);
             }
             catch (TextAttributesMinLengthHigherThanMaxLengthException)
             {
