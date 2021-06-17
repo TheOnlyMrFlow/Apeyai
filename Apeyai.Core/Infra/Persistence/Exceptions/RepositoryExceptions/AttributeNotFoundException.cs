@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions
 {
-    public abstract class EntityNotFoundException: RepositoryException
+    public class AttributeNotFoundException : EntityNotFoundException
     {
     }
 }

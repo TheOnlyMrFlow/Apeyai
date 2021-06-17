@@ -11,8 +11,10 @@ namespace Apeyai.Core.Infra.Persistence.Ports
     {
         Task<int> CreateEmptySchema(string schemaName);
 
-        Task<int> AddTextAttributeToSchema(int schemaId, TextAttribute textAttribute);
+        Task<int> AddTextAttributeToSchema(string schemaName, TextAttribute textAttribute);
 
-        Task<Schema> GetSchema(int schemaId);
+        Task<Schema> GetSchema(string schemaName);
+
+        Task RemoveAttributeFromSchema(string schemaName, string attributeName);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Apeyai.Core.Entities
 {
-    public class Schema : IIdentifiable
+    public class Schema
     {
-        public int Id { get; }
+        public string Name { get; set; }
         
         public TextAttribute[] TextAttributes { get; set; }
 

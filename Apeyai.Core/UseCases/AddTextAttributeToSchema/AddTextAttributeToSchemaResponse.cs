@@ -12,8 +12,6 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
             Unknown
         }
 
-        public int? AttributeId { get; set; }
-
         public ECreateTextAttributeError? Error { get; set; }
 
         public bool Success => Error == null;

@@ -24,7 +24,7 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
 
             try
             {
-                response.SchemaId = await _schemaRepository.CreateEmptySchema(_request.SchemaName);
+                await _schemaRepository.CreateEmptySchema(_request.SchemaName);
             }
             catch (EntityAlreadyExistsException)
             {
