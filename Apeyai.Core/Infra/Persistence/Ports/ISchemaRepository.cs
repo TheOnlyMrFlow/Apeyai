@@ -9,9 +9,9 @@ namespace Apeyai.Core.Infra.Persistence.Ports
 {
     public interface ISchemaRepository
     {
-        Task<int> CreateEmptySchema(string schemaName);
+        Task CreateEmptySchema(string schemaName);
 
-        Task<int> AddTextAttributeToSchema(string schemaName, TextAttribute textAttribute);
+        Task AddTextAttributeToSchema(string schemaName, TextAttribute textAttribute);
 
         Task<Schema> GetSchema(string schemaName);
 

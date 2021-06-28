@@ -1,4 +1,6 @@
-﻿using Apeyai.Core.Common;
+﻿using System.Collections.Generic;
+using Apeyai.Core.Common;
+using Apeyai.Core.Exceptions;
 
 namespace Apeyai.Core.Entities
 {
@@ -6,8 +8,14 @@ namespace Apeyai.Core.Entities
     {
         public string Name { get; set; }
         
-        public TextAttribute[] TextAttributes { get; set; }
+        public List<TextAttribute> TextAttributes { get; set; }
 
-        public BooleanAttribute[] BooleanAttributes { get; set; }
+        public List<BooleanAttribute> BooleanAttributes { get; set; }
+
+        public void AssertValidity()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new SchemaNameIsNullOrWhitespacesException();
+        }
     }
 }

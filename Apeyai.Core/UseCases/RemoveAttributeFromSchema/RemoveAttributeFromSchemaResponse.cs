@@ -7,17 +7,5 @@ using Apeyai.Core.Common.UseCases;
 
 namespace Apeyai.Core.UseCases.RemoveAttributeFromSchema
 {
-    public class RemoveAttributeFromSchemaResponse: IUseCaseResponse
-    {
-        public enum ERemoveAttributeFromSchemaError
-        {
-            SchemaNotFound,
-            AttributeNotFound,
-            Unknown
-        }
-
-        public ERemoveAttributeFromSchemaError? Error { get; internal set; }
-
-        public bool Success => Error == null;
-    }
+    public class RemoveAttributeFromSchemaResponse: IUseCaseResponse { }
 }

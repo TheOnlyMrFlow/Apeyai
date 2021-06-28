@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Apeyai.Core.Entities;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
 
@@ -18,7 +19,7 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
             _presenter = presenter;
         }
 
-        public async Task<CreateEmptySchemaResponse> Invoke()
+        public async Task Invoke()
         {
             var response = new CreateEmptySchemaResponse();
 
@@ -28,16 +29,18 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
             }
             catch (EntityAlreadyExistsException)
             {
-                response.Error = CreateEmptySchemaResponse.ECreateSchemaError.AlreadyExists;
+                _presenter.PresentSchemaAlreadyExistsError();
+
+                return;
             }
             catch (Exception)
             {
-                response.Error = CreateEmptySchemaResponse.ECreateSchemaError.Unknown;
+                _presenter.PresentUnknownError();
+
+                return;
             }
 
-            await _presenter.Present(response);
-
-            return response;
+            _presenter.PresentSuccess(response);
         }
     }
 }

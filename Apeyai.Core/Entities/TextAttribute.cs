@@ -12,8 +12,10 @@ namespace Apeyai.Core.Entities
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
 
-        public void AssertValidity()
+        public override void AssertValidity()
         {
+            base.AssertValidity();
+
             if (MinLength < 0)
                 throw new TextAttributesMinLengthLowerThanZeroException();
             if (MinLength > MaxLength)

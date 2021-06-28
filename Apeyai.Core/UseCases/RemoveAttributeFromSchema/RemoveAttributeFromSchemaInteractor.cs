@@ -21,27 +21,31 @@ namespace Apeyai.Core.UseCases.RemoveAttributeFromSchema
             _presenter = presenter;
         }
 
-        public async Task<RemoveAttributeFromSchemaResponse> Invoke()
+        public async Task Invoke()
         {
             var response = new RemoveAttributeFromSchemaResponse();
 
             try
-            {
-                await _schemaRepository.RemoveAttributeFromSchema("Toto", "User");
+            { 
+                await _schemaRepository.RemoveAttributeFromSchema(_request.SchemaName, _request.AttributeName);
             } catch (SchemaNotFoundException)
             {
-                response.Error = RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.SchemaNotFound;
+                _presenter.PresentSchemaNotFoundError();
+
+                return;
             } catch (AttributeNotFoundException)
             {
-                response.Error = RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.AttributeNotFound;
+                _presenter.PresentAttributeNotFoundError();
+
+                return;
             } catch (Exception)
             {
-                response.Error = RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.Unknown;
+                _presenter.PresentUnknownError();
+
+                return;
             }
 
-            await _presenter.Present(response);
-
-            return response;
+            _presenter.PresentSuccess(response);
         }
     }
 }

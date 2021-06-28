@@ -9,5 +9,6 @@ namespace Apeyai.Core.UseCases.GetSchema
 {
     public interface IGetSchemaPresenter : IUseCasePresenter<GetSchemaResponse>
     {
+        void PresentSchemaNotFoundError();
     }
 }
