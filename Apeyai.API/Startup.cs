@@ -1,19 +1,13 @@
+using Apeyai.API.UseCases.AddTextAttributeToSchema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Apeyai.API.UseCases.CreateEmptySchema;
+using Apeyai.API.UseCases.GetSchema;
 using Apeyai.Core.Infra.Persistence.Ports;
-using Apeyai.Core.UseCases.CreateEmptySchema;
 using Apeyai.Persistence.Sqlite;
 using Apeyai.Persistence.Sqlite.Repositories;
 
@@ -41,6 +35,8 @@ namespace Apeyai.API
             services.AddTransient<SqliteContext>();
             services.AddTransient<ISchemaRepository, SchemaRepository>();
             services.AddTransient<CreateEmptySchemaHttpPresenter>();
+            services.AddTransient<GetSchemaHttpPresenter>();
+            services.AddTransient<AddTextAttributeToSchemaHttpPresenter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

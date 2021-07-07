@@ -32,7 +32,7 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         }
 
         [Fact]
-        public async Task present_schema_already_exists_error_should_be_called_if_repository_throws_schema_already_exists_exception()
+        public async Task present_schema_not_found_error_should_be_called_if_repository_throws_schema_not_found_exception()
         {
             _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchema("Toto", It.IsAny<TextAttribute>())).Throws<SchemaAlreadyExistsException>();
 
@@ -41,7 +41,7 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
 
             await interactor.Invoke();
 
-            _addTextAttributeToSchemaPresenterMock.Verify(p => p.PresentSchemaAlreadyExistsError());
+            _addTextAttributeToSchemaPresenterMock.Verify(p => p.PresentSchemaNotFoundException());
         }
 
         [Fact]

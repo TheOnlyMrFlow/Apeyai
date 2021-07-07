@@ -2,14 +2,16 @@
 using Apeyai.Persistence.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Apeyai.Persistence.Sqlite.Migrations
 {
     [DbContext(typeof(SqliteContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20210706212449_IsRequiredTable")]
+    partial class IsRequiredTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

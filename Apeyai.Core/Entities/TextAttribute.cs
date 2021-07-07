@@ -7,7 +7,7 @@ using Apeyai.Core.Exceptions;
 
 namespace Apeyai.Core.Entities
 {
-    public class TextAttribute: BaseSchemaAttribute
+    public class TextAttribute: BaseAttribute
     {
         public int MinLength { get; set; }
         public int MaxLength { get; set; }

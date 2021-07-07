@@ -35,8 +35,16 @@ namespace Apeyai.Persistence.Sqlite.Repositories
             if (schema == null)
                 throw new SchemaNotFoundException();
 
+            var alreadyExistingAttribute =
+                _db.TextAttributes.FirstOrDefault(attr =>
+                    attr.SchemaId == schema.Id && attr.Name == textAttribute.Name);
+
+            if (alreadyExistingAttribute != null)
+                throw new AttributeAlreadyExistsException();
+
             var txtAttrDbEntity = TextAttributeDbEntity.FromBusinessEntity(textAttribute);
             txtAttrDbEntity.SchemaId = schema.Id;
+            _db.TextAttributes.Add(txtAttrDbEntity);
 
             await _db.SaveChangesAsync();
         }

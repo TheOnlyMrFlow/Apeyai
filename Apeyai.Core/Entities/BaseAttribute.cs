@@ -7,7 +7,7 @@ using Apeyai.Core.Exceptions;
 
 namespace Apeyai.Core.Entities
 {
-    public abstract class BaseSchemaAttribute
+    public abstract class BaseAttribute
     {
         public string Name { get; set; }
 

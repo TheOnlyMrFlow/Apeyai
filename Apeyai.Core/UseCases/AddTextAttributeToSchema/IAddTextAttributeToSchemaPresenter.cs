@@ -7,7 +7,7 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
         void PresentMinLengthGreaterThanMaxLengthError();
         void PresentMinLengthLowerThanZeroError();
         void PresentTextAttributeNameIsNullOrWhitespacesError();
-        void PresentSchemaAlreadyExistsError();
         void PresentAttributeAlreadyExistsException();
+        void PresentSchemaNotFoundException();
     }
 }

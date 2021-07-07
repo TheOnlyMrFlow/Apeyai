@@ -36,7 +36,7 @@ namespace Apeyai.Core.UseCases.GetSchema
 
                 return;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 _presenter.PresentUnknownError();
 

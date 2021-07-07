@@ -55,15 +55,15 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
 
                 return;
             }
-            catch (SchemaAlreadyExistsException)
-            {
-                _presenter.PresentSchemaAlreadyExistsError();
-
-                return;
-            }
             catch (AttributeAlreadyExistsException)
             {
                 _presenter.PresentAttributeAlreadyExistsException();
+
+                return;
+            }
+            catch (SchemaNotFoundException)
+            {
+                _presenter.PresentSchemaNotFoundException();
 
                 return;
             }
