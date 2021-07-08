@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
-using Apeyai.Core.UseCases.CreateEmptySchema;
 
 namespace Apeyai.Core.UseCases.GetSchema
 {
@@ -36,7 +32,7 @@ namespace Apeyai.Core.UseCases.GetSchema
 
                 return;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _presenter.PresentUnknownError();
 

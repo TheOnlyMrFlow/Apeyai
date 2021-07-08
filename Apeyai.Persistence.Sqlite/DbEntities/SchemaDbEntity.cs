@@ -23,7 +23,7 @@ namespace Apeyai.Persistence.Sqlite.DbEntities
             {
                 Name = Name,
                 TextAttributes = TextAttributes.Select(ta => ta.ToBusinessEntity()).ToList(),
-                BooleanAttributes = new List<BooleanAttribute>()
+                BooleanAttributes = new List<BooleanAttribute>(),
             };
         }
     }
