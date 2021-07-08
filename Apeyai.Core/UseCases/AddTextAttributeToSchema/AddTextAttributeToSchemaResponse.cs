@@ -9,6 +9,7 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
             AlreadyExists,
             MinLengthGreaterThanMaxLength,
             MinLengthLowerThanZero,
+            AttributeNameIsNullOrWhitespaces,
             Unknown
         }
 

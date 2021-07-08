@@ -1,16 +1,16 @@
-﻿using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
+﻿using System.Threading.Tasks;
+using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
 using Apeyai.Core.UseCases.RemoveAttributeFromSchema;
-using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
+namespace Apeyai.Core.Test.UseCases.RemoveAttributeFromSchema
 {
     public class RemoveAttributeFromSchemaInteractorTest
     {
-        public Mock<ISchemaRepository> _schemaRepositoryMock;
-        public Mock<IRemoveAttributeFromSchemaPresenter> _removeAttributeFromSchemaPresenterMock;
+        private readonly Mock<ISchemaRepository> _schemaRepositoryMock;
+        private readonly Mock<IRemoveAttributeFromSchemaPresenter> _removeAttributeFromSchemaPresenterMock;
 
         public RemoveAttributeFromSchemaInteractorTest()
         {
@@ -19,29 +19,29 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
         }
 
         [Fact]
-        public async void repository_method_removeAttributeFroMSchema_should_be_called_with_appropriate_args()
+        public async Task repository_method_removeAttributeFroMSchema_should_be_called_with_appropriate_args()
         {
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
             var interactor = new RemoveAttributeFromSchemaInteractor(request, _schemaRepositoryMock.Object, _removeAttributeFromSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
             _schemaRepositoryMock.Verify(repo => repo.RemoveAttributeFromSchema("Toto", "User"), Times.Once);
         }
 
         [Fact]
-        public async void response_success_should_be_true_if_repository_does_not_throw()
+        public async Task present_success_should_be_called_if_repository_does_not_throw()
         {
             var request = new RemoveAttributeFromSchemaRequest() { AttributeName = "User" };
             var interactor = new RemoveAttributeFromSchemaInteractor(request, _schemaRepositoryMock.Object, _removeAttributeFromSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeTrue();
+            _removeAttributeFromSchemaPresenterMock.Verify(p => p.PresentSuccess(It.IsAny<RemoveAttributeFromSchemaResponse>()));
         }
 
         [Fact]
-        public async void response_error_should_be_schema_not_found_if_repository_throws_schema_not_found_exception()
+        public async Task present_schema_not_found_error_should_be_called_if_repository_throws_schema_not_found_exception()
         {
             _schemaRepositoryMock
                 .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
@@ -50,14 +50,13 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
             var interactor = new RemoveAttributeFromSchemaInteractor(request, _schemaRepositoryMock.Object, _removeAttributeFromSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeFalse();
-            response.Error.Should().Be(RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.SchemaNotFound);
+            _removeAttributeFromSchemaPresenterMock.Verify(p => p.PresentSchemaNotFoundError());
         }
 
         [Fact]
-        public async void response_error_should_be_attribute_not_found_if_repository_throws_attribute_not_found_exception()
+        public async Task present_attribute_not_found_error_should_be_called_if_repository_throws_attribute_not_found_exception()
         {
             _schemaRepositoryMock
                 .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
@@ -66,14 +65,13 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
             var interactor = new RemoveAttributeFromSchemaInteractor(request, _schemaRepositoryMock.Object, _removeAttributeFromSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeFalse();
-            response.Error.Should().Be(RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.AttributeNotFound);
+            _removeAttributeFromSchemaPresenterMock.Verify(p => p.PresentAttributeNotFoundError());
         }
 
         [Fact]
-        public async void response_error_should_be_unknown_if_repository_throws_generic_repository_exception()
+        public async Task present_unknown_error_should_be_called_if_repository_throws_generic_repository_exception()
         {
             _schemaRepositoryMock
                 .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
@@ -82,10 +80,9 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
             var interactor = new RemoveAttributeFromSchemaInteractor(request, _schemaRepositoryMock.Object, _removeAttributeFromSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeFalse();
-            response.Error.Should().Be(RemoveAttributeFromSchemaResponse.ERemoveAttributeFromSchemaError.Unknown);
+            _removeAttributeFromSchemaPresenterMock.Verify(p => p.PresentUnknownError());
         }
     }
 }

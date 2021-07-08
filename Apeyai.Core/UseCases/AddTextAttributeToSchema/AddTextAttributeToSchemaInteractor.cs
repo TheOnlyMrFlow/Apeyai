@@ -20,10 +20,11 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
             _presenter = presenter;
         }
 
-        public async Task<AddTextAttributeToSchemaResponse> Invoke()
+        public async Task Invoke()
         {
             var textAttribute = new TextAttribute()
             {
+                Name = _request.AttributeName,
                 IsRequired = _request.IsRequired,
                 MinLength = _request.MinLength,
                 MaxLength = _request.Maxlength
@@ -38,24 +39,42 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
             }
             catch (TextAttributesMinLengthHigherThanMaxLengthException)
             {
-                response.Error = AddTextAttributeToSchemaResponse.ECreateTextAttributeError.MinLengthGreaterThanMaxLength;
+                _presenter.PresentMinLengthGreaterThanMaxLengthError();
+
+                return;
             }
             catch (TextAttributesMinLengthLowerThanZeroException)
             {
-                response.Error = AddTextAttributeToSchemaResponse.ECreateTextAttributeError.MinLengthLowerThanZero;
+                _presenter.PresentMinLengthLowerThanZeroError();
+
+                return;
             }
-            catch (EntityAlreadyExistsException)
+            catch (TextAttributeNameIsNullOrWhitespacesException)
             {
-                response.Error = AddTextAttributeToSchemaResponse.ECreateTextAttributeError.AlreadyExists;
+                _presenter.PresentTextAttributeNameIsNullOrWhitespacesError();
+
+                return;
+            }
+            catch (AttributeAlreadyExistsException)
+            {
+                _presenter.PresentAttributeAlreadyExistsException();
+
+                return;
+            }
+            catch (SchemaNotFoundException)
+            {
+                _presenter.PresentSchemaNotFoundException();
+
+                return;
             }
             catch (Exception)
             {
-                response.Error = AddTextAttributeToSchemaResponse.ECreateTextAttributeError.Unknown;
+                _presenter.PresentUnknownError();
+
+                return;
             }
 
-            await _presenter.Present(response);
-
-            return response;
+            _presenter.PresentSuccess(response);
         }
     }
 }

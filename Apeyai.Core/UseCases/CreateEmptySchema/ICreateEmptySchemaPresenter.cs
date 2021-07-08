@@ -4,5 +4,6 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
 {
     public interface ICreateEmptySchemaPresenter: IUseCasePresenter<CreateEmptySchemaResponse>
     {
+        void PresentSchemaAlreadyExistsError();
     }
 }

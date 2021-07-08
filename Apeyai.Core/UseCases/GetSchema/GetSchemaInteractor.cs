@@ -22,7 +22,7 @@ namespace Apeyai.Core.UseCases.GetSchema
             _presenter = presenter;
         }
 
-        public async Task<GetSchemaResponse> Invoke()
+        public async Task Invoke()
         {
             var response = new GetSchemaResponse();
 
@@ -30,18 +30,20 @@ namespace Apeyai.Core.UseCases.GetSchema
             {
                 response.Schema = await _schemaRepository.GetSchema(_request.SchemaName);
             }
-            catch (EntityNotFoundException)
+            catch (SchemaNotFoundException)
             {
-                response.Error = GetSchemaResponse.EGetSchemaError.NotFound;
+                _presenter.PresentSchemaNotFoundError();
+
+                return;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                response.Error = GetSchemaResponse.EGetSchemaError.Unknown;
+                _presenter.PresentUnknownError();
+
+                return;
             }
 
-            await _presenter.Present(response);
-
-            return response;
+            _presenter.PresentSuccess(response);
         }
     }
 }

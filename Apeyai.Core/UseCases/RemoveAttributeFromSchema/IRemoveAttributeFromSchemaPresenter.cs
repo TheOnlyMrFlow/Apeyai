@@ -9,5 +9,7 @@ namespace Apeyai.Core.UseCases.RemoveAttributeFromSchema
 {
     public interface IRemoveAttributeFromSchemaPresenter : IUseCasePresenter<RemoveAttributeFromSchemaResponse>
     {
+        void PresentSchemaNotFoundError();
+        void PresentAttributeNotFoundError();
     }
 }

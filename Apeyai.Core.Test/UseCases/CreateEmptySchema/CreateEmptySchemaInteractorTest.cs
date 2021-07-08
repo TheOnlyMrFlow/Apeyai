@@ -11,8 +11,8 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
 {
     public class CreateEmptySchemaInteractorTest
     {
-        public Mock<ISchemaRepository> _schemaRepositoryMock;
-        public Mock<ICreateEmptySchemaPresenter> _createSchemaPresenterMock;
+        private readonly Mock<ISchemaRepository> _schemaRepositoryMock;
+        private readonly Mock<ICreateEmptySchemaPresenter> _createSchemaPresenterMock;
 
         public CreateEmptySchemaInteractorTest()
         {
@@ -21,44 +21,40 @@ namespace Apeyai.Core.Test.UseCases.CreateEmptySchema
         }
 
         [Fact]
-        public async void response_schema_id_should_be_the_id_returned_by_repository()
+        public async Task response_success_should_be_true_if_repository_doesnt_throw()
         {
-            _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Returns(Task.FromResult(12));
-
             var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
             var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeTrue();
+            _createSchemaPresenterMock.Verify(p => p.PresentSuccess(It.IsAny<CreateEmptySchemaResponse>()));
         }
 
         [Fact]
-        public async void response_error_should_be_already_exists_if_repository_throws_entity_already_exists_exception()
+        public async Task present_schema_already_exists_error_should_be_called_if_repository_throws_entity_already_exists_exception()
         {
             _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Throws<EntityAlreadyExistsException>();
 
             var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
             var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeFalse();
-            response.Error.Should().Be(ECreateSchemaError.AlreadyExists);
+            _createSchemaPresenterMock.Verify(p => p.PresentSchemaAlreadyExistsError());
         }
 
         [Fact]
-        public async void response_error_should_be_unknown_if_repository_throws_generic_repository_exception()
+        public async Task response_error_should_be_unknown_if_repository_throws_generic_repository_exception()
         {
             _schemaRepositoryMock.Setup(repo => repo.CreateEmptySchema(It.IsAny<string>())).Throws<RepositoryException>();
 
             var createSchemaRequest = new CreateEmptySchemaRequest() { SchemaName = "Toto" };
             var interactor = new CreateEmptySchemaInteractor(createSchemaRequest, _schemaRepositoryMock.Object, _createSchemaPresenterMock.Object);
 
-            var response = await interactor.Invoke();
+            await interactor.Invoke();
 
-            response.Success.Should().BeFalse();
-            response.Error.Should().Be(ECreateSchemaError.Unknown);
+            _createSchemaPresenterMock.Verify(p => p.PresentUnknownError());
         }
     }
 }

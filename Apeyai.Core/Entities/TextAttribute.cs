@@ -7,13 +7,15 @@ using Apeyai.Core.Exceptions;
 
 namespace Apeyai.Core.Entities
 {
-    public class TextAttribute: BaseSchemaAttribute
+    public class TextAttribute: BaseAttribute
     {
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
 
-        public void AssertValidity()
+        public override void AssertValidity()
         {
+            base.AssertValidity();
+
             if (MinLength < 0)
                 throw new TextAttributesMinLengthLowerThanZeroException();
             if (MinLength > MaxLength)

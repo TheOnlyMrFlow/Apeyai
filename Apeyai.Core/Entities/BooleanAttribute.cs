@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Entities
 {
-    public class BooleanAttribute: BaseSchemaAttribute { }
+    public class BooleanAttribute: BaseAttribute { }
 }

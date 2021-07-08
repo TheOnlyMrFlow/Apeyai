@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apeyai.Core", "Apeyai.Core\Apeyai.Core.csproj", "{907B46AF-E012-4625-B6B6-804B8A1036AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apeyai.Core", "Apeyai.Core\Apeyai.Core.csproj", "{907B46AF-E012-4625-B6B6-804B8A1036AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apeyai.Core.Test", "Apeyai.Core.Test\Apeyai.Core.Test.csproj", "{C8E51719-B4BF-4EE6-9CC0-585F5B919ADD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apeyai.Core.Test", "Apeyai.Core.Test\Apeyai.Core.Test.csproj", "{C8E51719-B4BF-4EE6-9CC0-585F5B919ADD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apeyai.Persistence.Sqlite", "Apeyai.Persistence.Sqlite\Apeyai.Persistence.Sqlite.csproj", "{BBDC35F1-49F1-4F84-9460-57B18B677271}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apeyai.Persistence.EFCore.Migrations", "Apeyai.Persistence.EFCore.Migrations\Apeyai.Persistence.EFCore.Migrations.csproj", "{1BA3A48D-300C-44A7-BC40-10858C27FEE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apeyai.API", "Apeyai.API\Apeyai.API.csproj", "{D4BC2E51-F084-4601-9B0E-3B8A4FBD4F3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{C8E51719-B4BF-4EE6-9CC0-585F5B919ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8E51719-B4BF-4EE6-9CC0-585F5B919ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8E51719-B4BF-4EE6-9CC0-585F5B919ADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBDC35F1-49F1-4F84-9460-57B18B677271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBDC35F1-49F1-4F84-9460-57B18B677271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBDC35F1-49F1-4F84-9460-57B18B677271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBDC35F1-49F1-4F84-9460-57B18B677271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA3A48D-300C-44A7-BC40-10858C27FEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA3A48D-300C-44A7-BC40-10858C27FEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA3A48D-300C-44A7-BC40-10858C27FEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA3A48D-300C-44A7-BC40-10858C27FEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4BC2E51-F084-4601-9B0E-3B8A4FBD4F3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4BC2E51-F084-4601-9B0E-3B8A4FBD4F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4BC2E51-F084-4601-9B0E-3B8A4FBD4F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4BC2E51-F084-4601-9B0E-3B8A4FBD4F3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

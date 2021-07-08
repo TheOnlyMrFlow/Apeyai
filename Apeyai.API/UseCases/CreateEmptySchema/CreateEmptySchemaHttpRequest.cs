@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Apeyai.Core.Entities
+namespace Apeyai.API.UseCases.CreateEmptySchema
 {
-    public abstract class BaseSchemaAttribute
+    public class CreateEmptySchemaHttpRequest
     {
         public string Name { get; set; }
-
-        public bool IsRequired { get; set; }
     }
 }
