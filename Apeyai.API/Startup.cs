@@ -1,3 +1,4 @@
+using Apeyai.API.UseCases.AddForeignSchemaReferenceAttributeToSchema;
 using Apeyai.API.UseCases.AddTextAttributeToSchema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,10 +36,13 @@ namespace Apeyai.API
 
             services
                 .AddTransient<SqliteContext>()
+                // repositories
                 .AddTransient<ISchemaRepository, SchemaRepository>()
+                // http presenters
                 .AddTransient<CreateEmptySchemaHttpPresenter>()
                 .AddTransient<GetSchemaHttpPresenter>()
-                .AddTransient<AddTextAttributeToSchemaHttpPresenter>();
+                .AddTransient<AddTextAttributeToSchemaHttpPresenter>()
+                .AddTransient<AddForeignSchemaReferenceAttributeToSchemaHttpPresenter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

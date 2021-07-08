@@ -5,11 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Apeyai.Persistence.Sqlite
 {
-    public class SqliteContext : Microsoft.EntityFrameworkCore.DbContext
+    public class SqliteContext : DbContext
     {
         public DbSet<SchemaDbEntity> Schemas { get; set; }
 
+        public DbSet<BaseAttributeDbEntity> Attributes { get; set; }
+
         public DbSet<TextAttributeDbEntity> TextAttributes { get; set; }
+
+        public DbSet<ForeignSchemaReferenceAttributeDbEntity> ForeignSchemaReferenceAttributes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -24,7 +28,7 @@ namespace Apeyai.Persistence.Sqlite
         {
             base.OnModelCreating(modelBuilder);
             SchemaDbEntity.OnModelCreating(modelBuilder);
-            TextAttributeDbEntity.OnModelCreating(modelBuilder);
+            BaseAttributeDbEntity.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Apeyai.Core.UseCases.GetSchema
 
             try
             {
-                response.Schema = await _schemaRepository.GetSchema(_request.SchemaName);
+                response.Schema = await _schemaRepository.GetSchemaByNameAsync(_request.SchemaName);
             }
             catch (SchemaNotFoundException)
             {
@@ -32,7 +32,7 @@ namespace Apeyai.Core.UseCases.GetSchema
 
                 return;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 _presenter.PresentUnknownError();
 

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
 using Apeyai.Core.UseCases.AddTextAttributeToSchema;
@@ -17,13 +18,22 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         public AddTextAttributeToSchemaInteractorTest()
         {
             _schemaRepositoryMock = new Mock<ISchemaRepository>();
+            _schemaRepositoryMock
+                .Setup(repo =>
+                    repo.SchemaHasAttributeAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(false);
+            _schemaRepositoryMock
+                .Setup(repo =>
+                    repo.SchemaExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
             _addTextAttributeToSchemaPresenterMock = new Mock<IAddTextAttributeToSchemaPresenter>();
         }
 
         [Fact]
         public async Task present_success_should_be_called_if_repository_doesnt_throw()
         {
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserId"};
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute"};
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();
@@ -34,9 +44,9 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         [Fact]
         public async Task present_schema_not_found_error_should_be_called_if_repository_throws_schema_not_found_exception()
         {
-            _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchema("Toto", It.IsAny<TextAttribute>())).Throws<SchemaNotFoundException>();
+            _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchemaAsync("TotoSchema", It.IsAny<TextAttribute>())).Throws<SchemaNotFoundException>();
 
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute" };
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();
@@ -45,11 +55,13 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         }
 
         [Fact]
-        public async Task present_schema_already_exists_error_should_be_called_if_repository_throws_attribute_already_exists_exception()
+        public async Task present_schema_already_exists_error_should_be_called_if_attribute_with_same_name_already_exists_in_schema()
         {
-            _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchema("Toto", It.IsAny<TextAttribute>())).Throws<AttributeAlreadyExistsException>();
+            _schemaRepositoryMock
+                .Setup(repo => repo.SchemaHasAttributeAsync("TotoSchema", "UserIdAttribute"))
+                .ReturnsAsync(true);
 
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute" };
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();
@@ -60,9 +72,9 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         [Fact]
         public async Task present_unknown_error_should_be_called_if_repository_throws_generic_repository_exception()
         {
-            _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchema("Toto", It.IsAny<TextAttribute>())).Throws<RepositoryException>();
+            _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchemaAsync("TotoSchema", It.IsAny<TextAttribute>())).Throws<RepositoryException>();
 
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute" };
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();
@@ -73,7 +85,7 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         [Fact]
         public async Task present_min_length_min_length_greater_than_max_length_error_should_be_called_if_text_attribute_min_length_is_greater_than_max_length()
         {
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 20, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = 20, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute" };
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();
@@ -84,7 +96,7 @@ namespace Apeyai.Core.Test.UseCases.AddTextAttributeToSchema
         [Fact]
         public async Task presennt_min_length_lower_than_zero_error_should_be_called_if_text_attribute_min_length_is_lower_than_zero()
         {
-            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "toto", MinLength = -1, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
+            var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "TotoSchema", MinLength = -1, Maxlength = 15, IsRequired = true, AttributeName = "UserIdAttribute" };
             var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _addTextAttributeToSchemaPresenterMock.Object);
 
             await interactor.Invoke();

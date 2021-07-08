@@ -2,14 +2,16 @@
 using Apeyai.Persistence.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Apeyai.Persistence.Sqlite.Migrations
 {
     [DbContext(typeof(SqliteContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20210709175132_AttributesInheritance")]
+    partial class AttributesInheritance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,10 @@ namespace Apeyai.Persistence.Sqlite.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsRequired")
                         .HasColumnType("INTEGER");
 
@@ -30,23 +36,17 @@ namespace Apeyai.Persistence.Sqlite.Migrations
                     b.Property<int>("SchemaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
-
-                    b.HasIndex("SchemaId");
 
                     b.HasIndex("Name", "SchemaId")
                         .IsUnique()
                         .HasDatabaseName("IX_UniqueAttributeNameAmongSchemaConstraint");
 
-                    b.ToTable("Attribute");
+                    b.ToTable("BaseAttributeDbEntity");
 
-                    b.HasDiscriminator<string>("Type").IsComplete(false).HasValue("BaseAttributeDbEntity");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseAttributeDbEntity");
                 });
 
             modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.SchemaDbEntity", b =>
@@ -55,9 +55,6 @@ namespace Apeyai.Persistence.Sqlite.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CollectionName")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -65,19 +62,7 @@ namespace Apeyai.Persistence.Sqlite.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Schema");
-                });
-
-            modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.ForeignSchemaReferenceAttributeDbEntity", b =>
-                {
-                    b.HasBaseType("Apeyai.Persistence.Sqlite.DbEntities.BaseAttributeDbEntity");
-
-                    b.Property<string>("ForeignSchemaName")
-                        .HasColumnType("TEXT");
-
-                    b.ToTable("Attribute");
-
-                    b.HasDiscriminator().HasValue("Ref");
+                    b.ToTable("Schemas");
                 });
 
             modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.TextAttributeDbEntity", b =>
@@ -90,15 +75,15 @@ namespace Apeyai.Persistence.Sqlite.Migrations
                     b.Property<int>("MinLength")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable("Attribute");
+                    b.HasIndex("SchemaId");
 
-                    b.HasDiscriminator().HasValue("Text");
+                    b.HasDiscriminator().HasValue("TextAttributeDbEntity");
                 });
 
-            modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.BaseAttributeDbEntity", b =>
+            modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.TextAttributeDbEntity", b =>
                 {
                     b.HasOne("Apeyai.Persistence.Sqlite.DbEntities.SchemaDbEntity", "Schema")
-                        .WithMany("Attributes")
+                        .WithMany("TextAttributes")
                         .HasForeignKey("SchemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -108,7 +93,7 @@ namespace Apeyai.Persistence.Sqlite.Migrations
 
             modelBuilder.Entity("Apeyai.Persistence.Sqlite.DbEntities.SchemaDbEntity", b =>
                 {
-                    b.Navigation("Attributes");
+                    b.Navigation("TextAttributes");
                 });
 #pragma warning restore 612, 618
         }

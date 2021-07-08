@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Apeyai.Core.Exceptions
 {
-    public class TextAttributeNameIsNullOrWhitespacesException: BusinessRuleException
+    public class AttributeNameIsNullOrWhitespacesException: BusinessRuleException
     {
     }
 }

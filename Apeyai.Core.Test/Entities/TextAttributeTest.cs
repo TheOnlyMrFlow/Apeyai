@@ -1,4 +1,5 @@
 ﻿using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 using Apeyai.Core.Exceptions;
 using FluentAssertions;
 using Xunit;
@@ -23,8 +24,8 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttribute.AssertValidity())
-                .Should().Throw<TextAttributeNameIsNullOrWhitespacesException>();
+                .Invoking(textAttr => textAttribute.Validate())
+                .Should().Throw<AttributeNameIsNullOrWhitespacesException>();
         }
 
         [Fact]
@@ -39,7 +40,7 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttribute.AssertValidity())
+                .Invoking(textAttr => textAttribute.Validate())
                 .Should().Throw<TextAttributesMinLengthLowerThanZeroException>();
         }
 
@@ -55,7 +56,7 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttr.AssertValidity())
+                .Invoking(textAttr => textAttr.Validate())
                 .Should().Throw<TextAttributesMinLengthHigherThanMaxLengthException>();
         }
 
@@ -71,7 +72,7 @@ namespace Apeyai.Core.Test.Entities
             };
 
             textAttribute
-                .Invoking(textAttr => textAttr.AssertValidity())
+                .Invoking(textAttr => textAttr.Validate())
                 .Should().NotThrow();
         }
     } 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Apeyai.Core.Entities;
+﻿using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 
 namespace Apeyai.API.ViewModels
 {
@@ -20,6 +17,11 @@ namespace Apeyai.API.ViewModels
         public static TextAttributeViewModel ToViewModel(this TextAttribute textAttributeEntity)
         {
             return TextAttributeViewModel.FromEntity(textAttributeEntity);
+        }
+
+        public static ForeignSchemaReferenceAttributeViewModel ToViewModel(this ForeignSchemaReferenceAttribute foreignSchemaRefAttributeEntity)
+        {
+            return ForeignSchemaReferenceAttributeViewModel.FromEntity(foreignSchemaRefAttributeEntity);
         }
     }
 }

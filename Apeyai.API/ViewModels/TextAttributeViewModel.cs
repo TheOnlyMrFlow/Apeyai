@@ -1,4 +1,5 @@
 ﻿using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 
 namespace Apeyai.API.ViewModels
 {

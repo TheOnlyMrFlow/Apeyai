@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 using Apeyai.Core.Exceptions;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
@@ -34,8 +35,16 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
 
             try
             {
-                textAttribute.AssertValidity();
-                await _schemaRepository.AddTextAttributeToSchema(_request.SchemaName, textAttribute);
+                textAttribute.Validate();
+
+                if (await _schemaRepository.SchemaHasAttributeAsync(_request.SchemaName, _request.AttributeName))
+                {
+                    _presenter.PresentAttributeAlreadyExistsException();
+
+                    return;
+                }
+
+                await _schemaRepository.AddTextAttributeToSchemaAsync(_request.SchemaName, textAttribute);
             }
             catch (TextAttributesMinLengthHigherThanMaxLengthException)
             {
@@ -49,15 +58,9 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
 
                 return;
             }
-            catch (TextAttributeNameIsNullOrWhitespacesException)
+            catch (AttributeNameIsNullOrWhitespacesException)
             {
                 _presenter.PresentTextAttributeNameIsNullOrWhitespacesError();
-
-                return;
-            }
-            catch (AttributeAlreadyExistsException)
-            {
-                _presenter.PresentAttributeAlreadyExistsException();
 
                 return;
             }
@@ -67,7 +70,7 @@ namespace Apeyai.Core.UseCases.AddTextAttributeToSchema
 
                 return;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 _presenter.PresentUnknownError();
 

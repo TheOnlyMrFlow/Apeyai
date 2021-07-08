@@ -1,8 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Apeyai.Core.Entities;
-using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
-using Apeyai.Core.UseCases.AddTextAttributeToSchema;
 using Apeyai.Core.UseCases.CreateGetSingleItemEndpoint;
 using Moq;
 using Xunit;
@@ -43,14 +40,14 @@ namespace Apeyai.Core.Test.UseCases.CreateGetSingleItemEndpoint
         //[Fact]
         //public async Task present_schema_not_found_error_should_be_called_if_repository_throws_schema_not_found_exception()
         //{
-        //    _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchema("Toto", It.IsAny<TextAttribute>())).Throws<SchemaAlreadyExistsException>();
+        //    _schemaRepositoryMock.Setup(repo => repo.AddTextAttributeToSchemaAsync("Toto", It.IsAny<TextAttribute>())).Throws<SchemaAlreadyExistsException>();
 
         //    var createTextAttributeRequest = new AddTextAttributeToSchemaRequest() { SchemaName = "Toto", MinLength = 1, Maxlength = 15, IsRequired = true, AttributeName = "UserId" };
         //    var interactor = new AddTextAttributeToSchemaInteractor(createTextAttributeRequest, _schemaRepositoryMock.Object, _createGetSingleItemEndpointPresenterMock.Object);
 
         //    await interactor.Invoke();
 
-        //    _createGetSingleItemEndpointPresenterMock.Verify(p => p.PresentSchemaNotFoundException());
+        //    _createGetSingleItemEndpointPresenterMock.Verify(p => p.PresentSchemaNotFoundError());
         //}
     }
 }

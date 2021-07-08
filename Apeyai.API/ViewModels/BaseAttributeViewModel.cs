@@ -9,7 +9,8 @@ namespace Apeyai.API.ViewModels
     public enum EAttributeType
     {
         Boolean,
-        Text
+        Text,
+        Ref
     }
 
     public abstract class BaseAttributeViewModel

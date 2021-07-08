@@ -16,10 +16,13 @@ namespace Apeyai.API.ViewModels
             var textAttributes = schemaEntity.TextAttributes
                 .Select(attr => attr.ToViewModel());
 
+            var foreignSchemaRefAttributes = schemaEntity.ForeignSchemaReferenceAttributes
+                .Select(attr => attr.ToViewModel());
+
             return new SchemaViewModel()
             {
                 Name = schemaEntity.Name,
-                Attributes = boolAttributes.Concat(textAttributes)
+                Attributes = boolAttributes.Concat(textAttributes).Concat(foreignSchemaRefAttributes)
             };
         }
     }

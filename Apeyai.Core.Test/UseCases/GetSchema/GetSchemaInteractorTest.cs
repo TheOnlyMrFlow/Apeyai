@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Apeyai.Core.Entities;
+using Apeyai.Core.Entities.Attributes;
 using Apeyai.Core.Infra.Persistence.Exceptions.RepositoryExceptions;
 using Apeyai.Core.Infra.Persistence.Ports;
 using Apeyai.Core.UseCases.GetSchema;
@@ -29,7 +30,7 @@ namespace Apeyai.Core.Test.UseCases.GetSchema
                 BooleanAttributes = new List<BooleanAttribute>() {new() {IsRequired = true}},
                 TextAttributes = new List<TextAttribute>(0)
             };
-            _schemaRepositoryMock.Setup(repo => repo.GetSchema("Toto")).Returns(Task.FromResult(schemaReturnedByRepo));
+            _schemaRepositoryMock.Setup(repo => repo.GetSchemaByNameAsync("Toto")).Returns(Task.FromResult(schemaReturnedByRepo));
 
             var getSchemaRequest = new GetSchemaRequest() { SchemaName = "Toto" };
             var interactor = new GetSchemaInteractor(getSchemaRequest, _schemaRepositoryMock.Object, _getSchemaPresenterMock.Object);
@@ -42,7 +43,7 @@ namespace Apeyai.Core.Test.UseCases.GetSchema
         [Fact]
         public async Task response_error_should_be_not_found_if_repository_throws_not_found_exception()
         {
-            _schemaRepositoryMock.Setup(repo => repo.GetSchema("Toto")).Throws<SchemaNotFoundException>();
+            _schemaRepositoryMock.Setup(repo => repo.GetSchemaByNameAsync("Toto")).Throws<SchemaNotFoundException>();
 
             var getSchemaRequest = new GetSchemaRequest() { SchemaName = "Toto" };
             var interactor = new GetSchemaInteractor(getSchemaRequest, _schemaRepositoryMock.Object, _getSchemaPresenterMock.Object);
@@ -55,7 +56,7 @@ namespace Apeyai.Core.Test.UseCases.GetSchema
         [Fact]
         public async Task response_error_should_be_unknown_if_repository_throws_generic_repository_exception()
         {
-            _schemaRepositoryMock.Setup(repo => repo.GetSchema("Toto")).Throws<RepositoryException>();
+            _schemaRepositoryMock.Setup(repo => repo.GetSchemaByNameAsync("Toto")).Throws<RepositoryException>();
 
             var getSchemaRequest = new GetSchemaRequest() { SchemaName = "Toto" };
             var interactor = new GetSchemaInteractor(getSchemaRequest, _schemaRepositoryMock.Object, _getSchemaPresenterMock.Object);

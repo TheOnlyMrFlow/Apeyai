@@ -1,28 +1,12 @@
-﻿using Apeyai.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Apeyai.Core.Entities.Attributes;
 
 namespace Apeyai.Persistence.Sqlite.DbEntities
 {
-    public class TextAttributeDbEntity
+    public class TextAttributeDbEntity: BaseAttributeDbEntity
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsRequired { get; set; }
-
         public int MinLength { get; set; }
 
         public int MaxLength { get; set; }
-
-        public int SchemaId { get; set; }
-
-        public SchemaDbEntity Schema { get; set; }
-
-        public static void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TextAttributeDbEntity>().HasIndex(x => x.Name);
-        }
 
         public static TextAttributeDbEntity FromBusinessEntity(TextAttribute businessEntity)
         {
@@ -35,7 +19,7 @@ namespace Apeyai.Persistence.Sqlite.DbEntities
             };
         }
 
-        public TextAttribute ToBusinessEntity()
+        public override TextAttribute ToBusinessEntity()
         {
             return new TextAttribute()
             {

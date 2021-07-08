@@ -27,7 +27,7 @@ namespace Apeyai.Core.UseCases.RemoveAttributeFromSchema
 
             try
             { 
-                await _schemaRepository.RemoveAttributeFromSchema(_request.SchemaName, _request.AttributeName);
+                await _schemaRepository.RemoveAttributeFromSchemaAsync(_request.SchemaName, _request.AttributeName);
             } catch (SchemaNotFoundException)
             {
                 _presenter.PresentSchemaNotFoundError();

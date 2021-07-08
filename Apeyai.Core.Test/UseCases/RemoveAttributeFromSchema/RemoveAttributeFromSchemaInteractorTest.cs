@@ -26,7 +26,7 @@ namespace Apeyai.Core.Test.UseCases.RemoveAttributeFromSchema
 
             await interactor.Invoke();
 
-            _schemaRepositoryMock.Verify(repo => repo.RemoveAttributeFromSchema("Toto", "User"), Times.Once);
+            _schemaRepositoryMock.Verify(repo => repo.RemoveAttributeFromSchemaAsync("Toto", "User"), Times.Once);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Apeyai.Core.Test.UseCases.RemoveAttributeFromSchema
         public async Task present_schema_not_found_error_should_be_called_if_repository_throws_schema_not_found_exception()
         {
             _schemaRepositoryMock
-                .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
+                .Setup(repo => repo.RemoveAttributeFromSchemaAsync("Toto", "User"))
                 .Throws<SchemaNotFoundException>();
 
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
@@ -59,7 +59,7 @@ namespace Apeyai.Core.Test.UseCases.RemoveAttributeFromSchema
         public async Task present_attribute_not_found_error_should_be_called_if_repository_throws_attribute_not_found_exception()
         {
             _schemaRepositoryMock
-                .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
+                .Setup(repo => repo.RemoveAttributeFromSchemaAsync("Toto", "User"))
                 .Throws<AttributeNotFoundException>();
 
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };
@@ -74,7 +74,7 @@ namespace Apeyai.Core.Test.UseCases.RemoveAttributeFromSchema
         public async Task present_unknown_error_should_be_called_if_repository_throws_generic_repository_exception()
         {
             _schemaRepositoryMock
-                .Setup(repo => repo.RemoveAttributeFromSchema("Toto", "User"))
+                .Setup(repo => repo.RemoveAttributeFromSchemaAsync("Toto", "User"))
                 .Throws<RepositoryException>();
 
             var request = new RemoveAttributeFromSchemaRequest() { SchemaName = "Toto", AttributeName = "User" };

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Apeyai.Core.Exceptions;
+﻿using Apeyai.Core.Exceptions;
 
-namespace Apeyai.Core.Entities
+namespace Apeyai.Core.Entities.Attributes
 {
     public class TextAttribute: BaseAttribute
     {
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
 
-        public override void AssertValidity()
+        public override void Validate()
         {
-            base.AssertValidity();
+            base.Validate();
 
             if (MinLength < 0)
                 throw new TextAttributesMinLengthLowerThanZeroException();

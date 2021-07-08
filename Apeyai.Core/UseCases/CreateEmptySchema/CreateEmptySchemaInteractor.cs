@@ -25,7 +25,7 @@ namespace Apeyai.Core.UseCases.CreateEmptySchema
 
             try
             {
-                await _schemaRepository.CreateEmptySchema(_request.SchemaName);
+                await _schemaRepository.CreateEmptySchemaAsync(_request.SchemaName);
             }
             catch (EntityAlreadyExistsException)
             {
